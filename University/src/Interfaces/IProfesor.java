@@ -11,4 +11,7 @@ public interface IProfesor {
 
     double calcularSalario();
     void agregarMateria(Clase clase);
+    String getName();
+    int getAge();
+
 }

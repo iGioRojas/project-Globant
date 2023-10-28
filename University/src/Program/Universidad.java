@@ -1,4 +1,4 @@
-package App;
+package Program;
 
 import Interfaces.IProfesor;
 import Model.Clase;
@@ -79,11 +79,11 @@ public class Universidad {
 
         ArrayList<Estudiante> listaEstudiante = new ArrayList<>();
 
-        int indiceRandom = (int)(Math.random()*this.listaEstudiantes.size()-1);
+        int indiceRandom = (int)(Math.random()*(this.listaEstudiantes.size()-1));
 
         while (cantidad!=listaEstudiante.size()){
 
-            Estudiante est = listaEstudiante.get(indiceRandom);
+            Estudiante est = this.listaEstudiantes.get(indiceRandom);
             if(!listaEstudiante.contains(est)){
                 listaEstudiante.add(est);
             }
@@ -91,5 +91,25 @@ public class Universidad {
         }
 
         return listaEstudiante;
+    }
+
+    public ArrayList<IProfesor> getProfes(){
+        return this.listaProfesores;
+    }
+
+    public ArrayList<Clase> getClases(){
+        return this.listaClases;
+    }
+
+    public void agregarClase(Clase clase){
+        this.listaClases.add(clase);
+    }
+
+    public void agregarEstudiante(Estudiante estudiante){
+        this.listaEstudiantes.add(estudiante);
+    }
+
+    public void agregarProfe(IProfesor profe){
+        this.listaProfesores.add(profe);
     }
 }

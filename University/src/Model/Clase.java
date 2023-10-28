@@ -20,6 +20,26 @@ public class Clase {
         this.horario = horario;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getParalelo() {
+        return paralelo;
+    }
+
+    public ArrayList<Estudiante> getEstudiantes() {
+        return estudiantes;
+    }
+
+    public IProfesor getProfesor() {
+        return profesor;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
     public void agregarProfesor(IProfesor profesor) {
         this.profesor = profesor;
     }
