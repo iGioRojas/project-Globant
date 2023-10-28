@@ -2,6 +2,7 @@ package Program;
 
 import Interfaces.IProfesor;
 import Model.Clase;
+import Model.Estudiante;
 import Model.ProfesorFullTime;
 import Model.ProfesorPartTime;
 
@@ -9,6 +10,7 @@ import java.util.Scanner;
 
 public class App {
     private Universidad universidad;
+    private Scanner sc;
 
     public App(Universidad universidad){
         this.universidad = universidad;
@@ -20,6 +22,7 @@ public class App {
     }
 
     public int menu(Scanner sc){
+        this.sc = sc;
         System.out.println("1. Informacion de profesores\n" +
                 "2. Informacion de clases\n" +
                 "3. Crear un nuevo estudiante\n" +
@@ -51,24 +54,83 @@ public class App {
     public void infoClases() {
         System.out.println("\n#### Información de las clases y sus datos ####");
         System.out.println("Total materias: "+this.universidad.getClases().size());
-        for(int i = 0; i < this.universidad.getClases().size();i++){
-            Clase clase = this.universidad.getClases().get(i);
-            System.out.println((i+1)+". "+clase.getName());
-        }
-
+        presentarClases();
         System.out.println("Escriba el nombre de la materia o el número asignado:");
-        Scanner sc = new Scanner(System.in);
-        sc.useDelimiter("\n");
-        String opcion = sc.nextLine();
-        //TO DO HACER LA BUSQUEDA POR MATERIA O NUMERO
+        String opcion = this.sc.nextLine();
+        Clase clase = obtenerClase(opcion);
+        if(clase !=null){
+            System.out.println("-- Profesor: "+clase.getProfesor().getName());
+            System.out.println("--Horario: "+clase.getHorario());
+            System.out.println("-- Estudiantes");
+            for (Estudiante est:
+                 clase.getEstudiantes()) {
+                System.out.println("Nombre: "+est.getName());
+                System.out.println("Edad: "+est.getAge());
+            }
+        }
     }
 
     public void crearEstudiante() {
+        System.out.println("\n#### Registrar un nuevo estudiante ####");
+        System.out.print("Ingrese su nombre: ");
+        String nombre = this.sc.nextLine();
+        System.out.print("Ingrese su edad: ");
+        int edad = this.sc.nextInt();
+        int id = Universidad.identificador+1;
+        Estudiante nuevoEstudiante = new Estudiante(nombre,edad,id);
+
+        System.out.println("-- SE HA CREADO A "+nombre+" con el id "+id);
+
+        System.out.println("## Por favor agregarlo a una clase ##");
+        presentarClases();
+        System.out.println("Escriba el nombre de la materia o el número asignado:");
+        String opcion = this.sc.nextLine();
+        Clase claseAsignada = obtenerClase(opcion);
+        if(claseAsignada != null){
+            this.universidad.agregarEstudiante(nuevoEstudiante);
+            claseAsignada.getEstudiantes().add(nuevoEstudiante);
+            System.out.println("-- ESTUDIANTE REGISTRADO");
+        }else{
+            System.out.println("-- NO SE HA PODIDO REGISTRAR, ERROR");
+        }
     }
 
     public void crearClase() {
     }
 
     public void buscarEstudiante() {
+    }
+
+    private void presentarClases(){
+        for(int i = 0; i < this.universidad.getClases().size();i++){
+            Clase clase = this.universidad.getClases().get(i);
+            System.out.println((i+1)+". "+clase.getName());
+        }
+    }
+
+    private Clase obtenerClase(String opcion){
+        if(esEntero(opcion)){
+            int index = Integer.parseInt(opcion)-1;
+            if(index < this.universidad.getClases().size()){
+                return this.universidad.getClases().get(index);
+            }
+        }else{
+            for(Clase clase: this.universidad.getClases()){
+                if(opcion.equals(clase.getName())){
+                    return clase;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private boolean esEntero(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
