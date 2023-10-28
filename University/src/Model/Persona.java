@@ -11,4 +11,16 @@ public class Persona {
         this.age = age;
         this.id = id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getId() {
+        return id;
+    }
 }
