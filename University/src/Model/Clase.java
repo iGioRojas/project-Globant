@@ -48,11 +48,5 @@ public class Clase {
         this.estudiantes.add(estudiante);
     }
 
-    public void notificarEstudiantes() {
-        for (Estudiante est:
-             this.estudiantes) {
-            est.agregarClase(this);
-        }
-    }
 }
 

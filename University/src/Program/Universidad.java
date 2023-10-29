@@ -7,6 +7,7 @@ import Model.ProfesorFullTime;
 import Model.ProfesorPartTime;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Universidad {
 
@@ -69,11 +70,17 @@ public class Universidad {
         listaClases.add(clase2);
         listaClases.add(clase4);
         listaClases.add(clase3);
+        notificarEstudiantes(estudiantesClase1,clase1);
+        notificarEstudiantes(estudiantesClase2,clase2);
+        notificarEstudiantes(estudiantesClase3,clase3);
+        notificarEstudiantes(estudiantesClase4,clase4);
+    }
 
-        clase1.notificarEstudiantes();
-        clase2.notificarEstudiantes();
-        clase3.notificarEstudiantes();
-        clase4.notificarEstudiantes();
+    public void notificarEstudiantes(ArrayList<Estudiante> estudiantesClase, Clase clase) {
+        for(Estudiante est: estudiantesClase){
+            est.agregarClase(clase);
+            clase.agregarEstudiante(est);
+        }
     }
 
     public ArrayList<Estudiante> estudiantesPorClase(int cantidad){
@@ -118,7 +125,13 @@ public class Universidad {
         this.listaEstudiantes.add(estudiante);
     }
 
-    public void agregarProfe(IProfesor profe){
-        this.listaProfesores.add(profe);
+    public HashMap<Integer, Estudiante> getMapa(){
+        HashMap<Integer,Estudiante> mapa = new HashMap<>();
+        for (Estudiante est:this.listaEstudiantes) {
+            mapa.put(est.getId(),est);
+        }
+
+        return mapa;
     }
+
 }

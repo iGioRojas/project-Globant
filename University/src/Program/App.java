@@ -6,6 +6,8 @@ import Model.Estudiante;
 import Model.ProfesorFullTime;
 import Model.ProfesorPartTime;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class App {
@@ -107,13 +109,27 @@ public class App {
         presentarProfes();
         int id = sc.nextInt();
         IProfesor profe = this.universidad.getProfes().get(id-1);
+        ArrayList<Estudiante> estudiantesClase = this.universidad.estudiantesPorClase(this.universidad.getEstudiantes().size());
 
-        Clase clase = new Clase(nombre,paralelo,this.universidad.estudiantesPorClase(this.universidad.getEstudiantes().size()),profe,horario);
+        Clase clase = new Clase(nombre,paralelo,estudiantesClase,profe,horario);
         profe.agregarMateria(clase);
-        clase.notificarEstudiantes();
+        this.universidad.agregarClase(clase);
+        this.universidad.notificarEstudiantes(estudiantesClase,clase);
     }
 
     public void buscarEstudiante() {
+        HashMap<Integer,Estudiante> mapaEstudiantes = this.universidad.getMapa();
+        System.out.println("\n#### Buscar Estudiante ####");
+        System.out.print("Ingrese el id del estudiante: ");
+        int id = sc.nextInt();
+        Estudiante est = mapaEstudiantes.get(id);
+
+        System.out.println("Nombre estudiante: "+est.getName());
+        System.out.println("Materias registradas:");
+        for (Clase clase:
+             est.getClases()) {
+            System.out.println("- "+clase.getName() +"\tParalelo: "+clase.getParalelo());
+        }
     }
 
     private void presentarClases(){

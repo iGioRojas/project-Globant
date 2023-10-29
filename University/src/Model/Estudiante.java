@@ -12,6 +12,9 @@ public class Estudiante extends Persona{
 
     public void agregarClase(Clase clase){
         this.materias.add(clase);
-        clase.agregarEstudiante(this);
+    }
+
+    public ArrayList<Clase> getClases() {
+        return this.materias;
     }
 }
