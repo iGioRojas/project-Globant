@@ -96,7 +96,7 @@ public class App {
         Clase claseAsignada = obtenerClase(option);
         if(claseAsignada != null){
             this.universidad.agregarEstudiante(nuevoEstudiante);
-            claseAsignada.getEstudiantes().add(nuevoEstudiante);
+            claseAsignada.agregarEstudiante(nuevoEstudiante);
             System.out.println("-- ESTUDIANTE REGISTRADO");
         }else{
             System.out.println("-- NO SE HA PODIDO REGISTRAR, ERROR");
