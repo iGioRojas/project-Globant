@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class Universidad {
 
     public static String nombre = "Globant University";
-    public static int identificador = 1;
+    public static int identificador = 0;
 
     private ArrayList<IProfesor> listaProfesores;
     private ArrayList<Clase> listaClases;
@@ -27,11 +27,12 @@ public class Universidad {
         llenarClases();
     }
 
+
     private void llenarProfes(){
-        ProfesorFullTime profe1 = new ProfesorFullTime("Profe1",25,Universidad.identificador+1,3);
-        ProfesorFullTime profe2 = new ProfesorFullTime("Profe2",30,Universidad.identificador+1,5);
-        ProfesorPartTime profe3 = new ProfesorPartTime("Profe3",20,Universidad.identificador+1,15);
-        ProfesorPartTime profe4 = new ProfesorPartTime("Profe4",22,Universidad.identificador+1,20);
+        ProfesorFullTime profe1 = new ProfesorFullTime("Profe1",25,Universidad.identificador++,3);
+        ProfesorFullTime profe2 = new ProfesorFullTime("Profe2",30,Universidad.identificador++,5);
+        ProfesorPartTime profe3 = new ProfesorPartTime("Profe3",20,Universidad.identificador++,15);
+        ProfesorPartTime profe4 = new ProfesorPartTime("Profe4",22,Universidad.identificador++,20);
         listaProfesores.add(profe1);
         listaProfesores.add(profe2);
         listaProfesores.add(profe3);
@@ -39,12 +40,12 @@ public class Universidad {
     }
 
     private void llenarEstudiantes(){
-        Estudiante estudiante1 = new Estudiante("Estudiante1",18,Universidad.identificador+1);
-        Estudiante estudiante2 = new Estudiante("Estudiante2",19,Universidad.identificador+1);
-        Estudiante estudiante3 = new Estudiante("Estudiante3",18,Universidad.identificador+1);
-        Estudiante estudiante4 = new Estudiante("Estudiante4",17,Universidad.identificador+1);
-        Estudiante estudiante5 = new Estudiante("Estudiante5",20,Universidad.identificador+1);
-        Estudiante estudiante6 = new Estudiante("Estudiante6",18,Universidad.identificador+1);
+        Estudiante estudiante1 = new Estudiante("Estudiante1",18,Universidad.identificador++);
+        Estudiante estudiante2 = new Estudiante("Estudiante2",19,Universidad.identificador++);
+        Estudiante estudiante3 = new Estudiante("Estudiante3",18,Universidad.identificador++);
+        Estudiante estudiante4 = new Estudiante("Estudiante4",17,Universidad.identificador++);
+        Estudiante estudiante5 = new Estudiante("Estudiante5",20,Universidad.identificador++);
+        Estudiante estudiante6 = new Estudiante("Estudiante6",18,Universidad.identificador++);
         listaEstudiantes.add(estudiante1);
         listaEstudiantes.add(estudiante2);
         listaEstudiantes.add(estudiante3);
@@ -74,13 +75,6 @@ public class Universidad {
         notificarEstudiantes(estudiantesClase2,clase2);
         notificarEstudiantes(estudiantesClase3,clase3);
         notificarEstudiantes(estudiantesClase4,clase4);
-    }
-
-    public void notificarEstudiantes(ArrayList<Estudiante> estudiantesClase, Clase clase) {
-        for(Estudiante est: estudiantesClase){
-            est.agregarClase(clase);
-            clase.agregarEstudiante(est);
-        }
     }
 
     public ArrayList<Estudiante> estudiantesPorClase(int cantidad){
@@ -134,4 +128,10 @@ public class Universidad {
         return mapa;
     }
 
+    public void notificarEstudiantes(ArrayList<Estudiante> estudiantesClase, Clase clase) {
+        for(Estudiante est:
+                estudiantesClase){
+            est.agregarClase(clase);
+        }
+    }
 }

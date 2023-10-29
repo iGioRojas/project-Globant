@@ -6,14 +6,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
-        sc.useDelimiter("\n");
         Universidad universidad = new Universidad();
         App app = new App(universidad);
         app.bienvenida();
-        int opcion = app.menu(sc);
-        while(opcion != 6){
-            switch (opcion){
+        int opcion = app.menu();
+        while (opcion != 6) {
+            switch (opcion) {
                 case 1:
                     app.infoProfes();
                     break;
@@ -31,13 +29,13 @@ public class Main {
                     break;
                 default:
                     System.out.println("***Ingrese una opcion valida\n\n");
-                    opcion = app.menu(sc);
+                    opcion = app.menu();
                     break;
             }
             System.out.println("---------------------------------------------");
-            opcion = app.menu(sc);
-        }
+            opcion = app.menu();
 
-        app.salir();
+        }
+            app.salir();
     }
 }
