@@ -12,7 +12,6 @@ import java.util.Scanner;
 
 public class App {
     private Universidad universidad;
-    private Scanner sc;
 
     public App(Universidad universidad){
         this.universidad = universidad;
@@ -23,8 +22,10 @@ public class App {
         System.out.println("######################");
     }
 
-    public int menu(Scanner sc){
-        this.sc = sc;
+    public int menu(){
+        Scanner sc = new Scanner(System.in);
+        sc.useDelimiter("\n");
+        System.out.println("****** MENU *****");
         System.out.println("1. Informacion de profesores\n" +
                 "2. Informacion de clases\n" +
                 "3. Crear un nuevo estudiante\n" +
@@ -54,31 +55,36 @@ public class App {
     }
 
     public void infoClases() {
+        Scanner sc = new Scanner(System.in);
+        sc.useDelimiter("\n");
         System.out.println("\n#### Información de las clases y sus datos ####");
         System.out.println("Total materias: "+this.universidad.getClases().size());
         presentarClases();
         System.out.println("Escriba el nombre de la materia o el número asignado:");
-        String opcion = this.sc.nextLine();
+        String opcion = sc.nextLine();
         Clase clase = obtenerClase(opcion);
         if(clase !=null){
             System.out.println("-- Profesor: "+clase.getProfesor().getName());
-            System.out.println("--Horario: "+clase.getHorario());
+            System.out.println("-- Horario: "+clase.getHorario());
             System.out.println("-- Estudiantes");
             for (Estudiante est:
                  clase.getEstudiantes()) {
-                System.out.println("Nombre: "+est.getName());
-                System.out.println("Edad: "+est.getAge());
+                System.out.println("\tNombre: "+est.getName());
+                System.out.println("\tEdad: "+est.getAge());
+                System.out.print("\n");
             }
         }
     }
 
     public void crearEstudiante() {
+        Scanner sc = new Scanner(System.in);
+        sc.useDelimiter("\n");
         System.out.println("\n#### Registrar un nuevo estudiante ####");
         System.out.print("Ingrese su nombre: ");
-        String nombre = this.sc.nextLine();
+        String nombre = sc.next();
         System.out.print("Ingrese su edad: ");
-        int edad = this.sc.nextInt();
-        int id = Universidad.identificador+1;
+        int edad = sc.nextInt();
+        int id = Universidad.identificador++;
         Estudiante nuevoEstudiante = new Estudiante(nombre,edad,id);
 
         System.out.println("-- SE HA CREADO A "+nombre+" con el id "+id);
@@ -86,8 +92,8 @@ public class App {
         System.out.println("## Por favor agregarlo a una clase ##");
         presentarClases();
         System.out.println("Escriba el nombre de la materia o el número asignado:");
-        String opcion = this.sc.nextLine();
-        Clase claseAsignada = obtenerClase(opcion);
+        String option = sc.next();
+        Clase claseAsignada = obtenerClase(option);
         if(claseAsignada != null){
             this.universidad.agregarEstudiante(nuevoEstudiante);
             claseAsignada.getEstudiantes().add(nuevoEstudiante);
@@ -98,13 +104,15 @@ public class App {
     }
 
     public void crearClase() {
+        Scanner sc = new Scanner(System.in);
+        sc.useDelimiter("\n");
         System.out.println("\n#### Registrar una nueva materia ####");
         System.out.print("Ingrese nombre de la materia: ");
-        String nombre = this.sc.nextLine();
+        String nombre = sc.nextLine();
         System.out.print("Ingrese el paralelo: ");
-        int paralelo = this.sc.nextInt();
+        int paralelo = sc.nextInt();
         System.out.print("Ingrese el horario: ");
-        String horario = this.sc.nextLine();
+        String horario = sc.nextLine();
         System.out.println("Asigne un profesor:");
         presentarProfes();
         int id = sc.nextInt();
@@ -118,17 +126,32 @@ public class App {
     }
 
     public void buscarEstudiante() {
+        Scanner sc = new Scanner(System.in);
+        sc.useDelimiter("\n");
         HashMap<Integer,Estudiante> mapaEstudiantes = this.universidad.getMapa();
         System.out.println("\n#### Buscar Estudiante ####");
         System.out.print("Ingrese el id del estudiante: ");
         int id = sc.nextInt();
         Estudiante est = mapaEstudiantes.get(id);
+        if (est != null) {
+            System.out.println("Nombre estudiante: "+est.getName());
+            System.out.println("Materias registradas:");
+            for (Clase clase:
+                    est.getClases()) {
+                System.out.println("- "+clase.getName() +"\tParalelo: "+clase.getParalelo());
+            }
+        }else{
+            System.out.println("-- ID NO REGISTRADO");
+                mostrarEstudiantes();
+        }
 
-        System.out.println("Nombre estudiante: "+est.getName());
-        System.out.println("Materias registradas:");
-        for (Clase clase:
-             est.getClases()) {
-            System.out.println("- "+clase.getName() +"\tParalelo: "+clase.getParalelo());
+    }
+
+    private void mostrarEstudiantes() {
+        for (Estudiante est:
+             this.universidad.getEstudiantes()) {
+            System.out.println("ID: "+est.getId());
+            System.out.println("Nombre: "+est.getName());
         }
     }
 
@@ -171,4 +194,5 @@ public class App {
             System.out.println((i+1)+". "+profe.getName());
         }
     }
+
 }
