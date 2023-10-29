@@ -69,9 +69,14 @@ public class Universidad {
         listaClases.add(clase2);
         listaClases.add(clase4);
         listaClases.add(clase3);
+
+        clase1.notificarEstudiantes();
+        clase2.notificarEstudiantes();
+        clase3.notificarEstudiantes();
+        clase4.notificarEstudiantes();
     }
 
-    private ArrayList<Estudiante> estudiantesPorClase(int cantidad){
+    public ArrayList<Estudiante> estudiantesPorClase(int cantidad){
 
         if(cantidad == this.listaEstudiantes.size()){
             return this.listaEstudiantes;
@@ -95,6 +100,10 @@ public class Universidad {
 
     public ArrayList<IProfesor> getProfes(){
         return this.listaProfesores;
+    }
+
+    public ArrayList<Estudiante> getEstudiantes(){
+        return this.listaEstudiantes;
     }
 
     public ArrayList<Clase> getClases(){
