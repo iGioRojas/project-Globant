@@ -96,6 +96,21 @@ public class App {
     }
 
     public void crearClase() {
+        System.out.println("\n#### Registrar una nueva materia ####");
+        System.out.print("Ingrese nombre de la materia: ");
+        String nombre = this.sc.nextLine();
+        System.out.print("Ingrese el paralelo: ");
+        int paralelo = this.sc.nextInt();
+        System.out.print("Ingrese el horario: ");
+        String horario = this.sc.nextLine();
+        System.out.println("Asigne un profesor:");
+        presentarProfes();
+        int id = sc.nextInt();
+        IProfesor profe = this.universidad.getProfes().get(id-1);
+
+        Clase clase = new Clase(nombre,paralelo,this.universidad.estudiantesPorClase(this.universidad.getEstudiantes().size()),profe,horario);
+        profe.agregarMateria(clase);
+        clase.notificarEstudiantes();
     }
 
     public void buscarEstudiante() {
@@ -131,6 +146,13 @@ public class App {
             return true;
         } catch (NumberFormatException e) {
             return false;
+        }
+    }
+
+    public void presentarProfes(){
+        for (int i = 0; i < this.universidad.getProfes().size();i++) {
+            IProfesor profe = this.universidad.getProfes().get(i);
+            System.out.println((i+1)+". "+profe.getName());
         }
     }
 }
